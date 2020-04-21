@@ -19,6 +19,12 @@ fun listProvidersWithFilterFlatMap(filter: String){
     details.forEach{
         println("${it.providerName}, ${it.name}")
     }
+
+    val teste: String;
+    teste = "Teste";
+    teste = "Teste 2"; //erro de compilação por fazer uma reatribuição
+    teste = 10; //erro de compilação por atribuir outro tipo
+    val inteiro; //erro de compilação. Não é possível fazer inferência sem atribuição e sem definir o tipo
 }
 
 fun listProvidersWithFilterMap(filter: String){
