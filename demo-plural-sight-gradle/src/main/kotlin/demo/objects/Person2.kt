@@ -32,6 +32,9 @@ open class Person2(val name:String, var age: Int,var isMarried: Boolean = false)
             val otherUser = kevin.copy(id=2)
 
             println(otherUser)
+
+            val p2 = Person("2",2);
+            p2.age;
         }
     }
 
