@@ -15,7 +15,7 @@ fun forTest2(){
     val scanner = Scanner(System.`in`)
     val size = scanner.nextLine().toInt()
     val numbers = scanner.nextLine().split(" ").toList().map(String::toInt)
-    var maxSequence = 1
+    var maxSequence = 0
     var last:Int = -1
     var maxValue = -1
     for(value in numbers){
