@@ -7,10 +7,101 @@ import kotlin.math.pow
 import java.util.*
 import kotlin.math.sqrt
 
-
 fun main(args: Array<String>) {
-    speedAverage()
+    createAEuphoniousWord()
 }
+
+fun sum(a: Int, b: Int): Int = a + b
+val mul2 = { a: Int, b: Int -> a * b }
+
+private fun lambdasDemo() {
+    println(sum(1, 2))
+    println(mul2(2, 3))
+}
+
+fun compose(g: (Int) -> Int, h: (Int) -> Int): (Int) -> Int {
+    return {i-> h(i)}
+}
+
+
+/*
+Groundhogs like to throw fun parties, and at their parties, they like to eat Reeses peanut butter cups.
+But not too many Reeses or they will feel sick! A successful groundhog party should have between 10 and 20 Reeses peanut butter cups,
+inclusive unless it is the weekend. In this case they need 15 to 25 Reeses peanut butter cups, inclusive.
+
+Write a Kotlin program that reads two values:
+
+    the first is the number of Reeses peanut butter cups;
+    the second is a boolean representing whether it is the weekend.
+
+The program must print the boolean value that tells us whether the party is successful.
+ */
+fun groundHogsAtTheParty(){
+    val scanner = Scanner(System.`in`)
+    val input = scanner.nextLine().split(" ")
+    val quant = input[0].toInt()
+    val isWeekend = input[1].toBoolean()
+    if(isWeekend){
+        print(quant in 15..25)
+    }else{
+        print(quant in 10..20)
+    }
+}
+
+/*
+All the letters of the English alphabet are divided into vowels and consonants.
+The vowels are: a, e, i, o, u, y.
+The remaining letters are consonants.
+A word is considered euphonious if it has not three or more vowels or consonants in a row. Otherwise, it is considered discordant.
+Your task is to create euphonious words from discordant. You can insert any letters inside word. You should output the minimum number of characters needed to create a euphonious word from a given word.
+For example, word "schedule" is considered discordant because it has three consonants in a row - "sch". To create a euphonious word you need to add any vowel between 's' and 'c' or between 'c' and 'h'.
+
+Exemplo:
+wwwwwwwwwwwwwwwwwwwwwwwwwwwww
+ */
+fun createAEuphoniousWord(){
+    val word = readLine()!!.toLowerCase()
+    val lastIndex = word.toCharArray().lastIndex
+    var total = 0
+    var index = 0
+    while(index < lastIndex){
+        var ok = false
+        while ((index + 2 <= lastIndex && testIsVowels(word[index]) && testIsVowels(word[index + 1])  && testIsVowels(word[index + 2]))
+                || (index + 2 <= lastIndex && (!testIsVowels(word[index]) && !testIsVowels(word[index + 1])  && !testIsVowels(word[index + 2])))) {
+            index+=2
+            total++
+            ok = true
+            continue
+        }
+        if(!ok){
+            index++
+        }
+    }
+    println(total)
+}
+
+fun testIsVowels(c: Char): Boolean{
+    return when(c){
+        'a','e','i','o','u','y' -> true
+        else -> false
+    }
+}
+
+/*
+Write a program that reads four numbers (height, twice length, width) and uses all of them as fields of a data class which is Box.
+
+Use copy() function in order to create a second box with a different length value (from input). As a result, there must be two boxes. Print them both.
+ */
+data class Box(val height: Int, val length: Int, val width: Int)
+fun copyUsage(){
+    val scanner = Scanner(System.`in`)
+    val numbers = scanner.nextLine().split(" ").map(String::toInt)
+    val box1 = Box(numbers[0],numbers[1],numbers[3])
+    val box2 = box1.copy(length = numbers[2])
+    println(box1)
+    println(box2)
+}
+fun Int.lastDigit() : Int = this.toString().last().toString().toInt()
 
 /*
 Write a program that reads the distance between the two cities in miles and the travel time by bus in hours, and outputs the average speed of the bus.
@@ -214,13 +305,39 @@ fun battleshipGame(){
     matrix[numbers[2]-1][numbers[3]-1] = 2
     matrix[numbers[4]-1][numbers[5]-1] = 3
 
+    var matrixX = mutableListOf<Int>()
+    var matrixY = mutableListOf<Int>()
+
     loop@ for (i in 0..4) {
         for (j in 0..4) {
             if(matrix[i][j] != 0){
                 continue@loop;
             }
         }
-        print("$i+1")
+        matrixX.add(i + 1)
+        }
+    println()
+    loop@ for (i in 0..4) {
+        for (j in 0..4) {
+            if(matrix[j][i] != 0){
+                continue@loop;
+            }
+        }
+        matrixY.add(i + 1)
+    }
+    printMatrix(matrixX)
+    println()
+    printMatrix(matrixY)
+
+}
+
+fun printMatrix(m: MutableList<Int>){
+    for(i in 0..m.lastIndex){
+        if(i != m.lastIndex){
+            print("${m[i]} ")
+        }else{
+            print("${m[i]}")
+        }
     }
 }
 
